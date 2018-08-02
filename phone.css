@@ -1,0 +1,4 @@
+.box { width: 99.6%; }
+
+ul li { margin-left: 50px; }
+ul li:nth-child(1) { margin-right: 25px; }

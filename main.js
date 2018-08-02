@@ -4,16 +4,25 @@ var tl,
 	songTimes = [],
 	songYears = [],
 
+	phoneMode = false,
+
 	sortBy = "name",
-	init = true,
+	// init = true,
 
 	coreOpacity = 0.25,
 	inflateScale = 1.25,
 	radius = 400;
 
-window.addEventListener("load", drawGrid, false);
+window.addEventListener("load", initialize, false);
 
-function drawGrid(evt) {
+function initialize(evt) {
+	if (window.innerWidth < 800) phoneMode = true;
+	window.addEventListener("resize", widthCheck, false);
+
+	drawGrid();
+}
+
+function drawGrid() {
 	// Reorganize grid by "sortBy"
 	songs.sort(reorder);
 
@@ -113,10 +122,11 @@ function redrawGrid() {
 
 // Mouse stuff
 function rollOn(evt) {
-	TweenLite.to(evt.target, 0.5, {scale:inflateScale, opacity:1, ease:Power4.easeOut});
-
 	var coreX = evt.target.offsetLeft + (evt.target.offsetWidth/2),
 		coreY = evt.target.offsetTop + (evt.target.offsetHeight/2);
+
+	if (!phoneMode) { TweenLite.to(evt.target, 0.5, {scale:inflateScale, opacity:1, ease:Power4.easeOut}); }
+	else { TweenLite.to(evt.target, 0.5, {opacity:1, ease:Power4.easeOut}); }
 
 	for (var i = 0; i < main.children.length; i++) {
 		var box = main.children[i],
@@ -127,10 +137,10 @@ function rollOn(evt) {
 
 		if (dist <= radius && box != evt.target) {
 			var p = (radius - dist) / radius;
-			TweenLite.to(box, 0.5, {scale:1 + (p * (inflateScale - 1)), opacity:coreOpacity + (p * (1 - coreOpacity))});
+
+			if (!phoneMode) TweenLite.to(box, 0.5, {scale:1 + (p * (inflateScale - 1)), opacity:coreOpacity + (p * (1 - coreOpacity))});
+			else TweenLite.to(box, 0.5, {opacity:coreOpacity + (p * (1 - coreOpacity))});
 		}
-
-
 	}
 }
 function rollOff(evt) {
@@ -140,4 +150,11 @@ function rollOff(evt) {
 		var box = main.children[i];
 		TweenLite.to(box, 0.5, {scale:1, opacity:coreOpacity, ease:Power4.easeOut});
 	}
+}
+
+function widthCheck(evt) {
+	if (window.innerWidth < 800) phoneMode = true;
+	else phoneMode = false;
+
+	console.log(phoneMode);
 }
