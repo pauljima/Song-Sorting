@@ -1,4 +1,10 @@
+#main { max-width: 90%; }
 .box { width: 99.6%; }
 
-ul li { margin-left: 50px; }
-ul li:nth-child(1) { margin-right: 25px; }
+nav {
+	padding-right: 5%;
+	padding-left: 5%;
+}
+
+ul li { margin-left: 10px; }
+ul li:nth-child(1) { margin-right: 7%; }

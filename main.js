@@ -53,6 +53,9 @@ function animateGrid() {
 	setTimeout(function() {
 		for (var i = 0; i < main.children.length; i++) {
 			var box = main.children[i];
+
+			box.addEventListener("click", rollOn, false);
+
 			box.addEventListener("mouseenter", rollOn, false);
 			box.addEventListener("mouseleave", rollOff, false);
 		}
@@ -109,6 +112,8 @@ function redrawGrid() {
 	for (var i = 0; i < main.children.length; i++) {
 		var box = main.children[i];
 
+		box.removeEventListener("click", rollOn, false);
+
 		box.removeEventListener("mouseenter", rollOn, false);
 		box.removeEventListener("mouseleave", rollOff, false);
 
@@ -126,7 +131,7 @@ function rollOn(evt) {
 		coreY = evt.target.offsetTop + (evt.target.offsetHeight/2);
 
 	if (!phoneMode) { TweenLite.to(evt.target, 0.5, {scale:inflateScale, opacity:1, ease:Power4.easeOut}); }
-	else { TweenLite.to(evt.target, 0.5, {opacity:1, ease:Power4.easeOut}); }
+	else { TweenLite.to(evt.target, 1, {opacity:1, ease:Power4.easeOut}); }
 
 	for (var i = 0; i < main.children.length; i++) {
 		var box = main.children[i],
@@ -139,7 +144,7 @@ function rollOn(evt) {
 			var p = (radius - dist) / radius;
 
 			if (!phoneMode) TweenLite.to(box, 0.5, {scale:1 + (p * (inflateScale - 1)), opacity:coreOpacity + (p * (1 - coreOpacity))});
-			else TweenLite.to(box, 0.5, {opacity:coreOpacity + (p * (1 - coreOpacity))});
+			else TweenLite.to(box, 1, {opacity:coreOpacity + (p * (1 - coreOpacity))});
 		}
 	}
 }
