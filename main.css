@@ -125,3 +125,10 @@ ul li:nth-child(3) { opacity: 1; }
 	text-transform: uppercase;
 	font-weight: bold;
 }
+
+
+
+@media screen and (max-width:1010px) {
+	nav p { padding-left: 20px; }
+	ul li:nth-child(1) { padding-right: 20px; }
+}
